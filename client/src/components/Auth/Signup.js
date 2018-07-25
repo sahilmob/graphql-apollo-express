@@ -8,7 +8,7 @@ class Signup extends React.Component {
         passwordConfirmation: ''
     };
 
-    handelChange = (e) => {
+    handleChange = (e) => {
         const {name, value} = e.target;
         this.setState({
             [name]: value
@@ -21,10 +21,10 @@ class Signup extends React.Component {
             <div className="App">
               <h2 className="App">Signup</h2>
               <form className="form">
-                <input type="text" name="username" placeholder="Username" onChange={ this.handelChange } value={ username } />
-                <input type="email" name="email" placeholder="Email Address" onChange={ this.handelChange } value={ email } />
-                <input type="password" name="password" placeholder="Password" onChange={ this.handelChange } value={ password } />
-                <input type="password" name="passwordConfirmation" placeholder="Confirm Password" onChange={ this.handelChange } value={ passwordConfirmation } />
+                <input type="text" name="username" placeholder="Username" onChange={ this.handleChange } value={ username } />
+                <input type="email" name="email" placeholder="Email Address" onChange={ this.handleChange } value={ email } />
+                <input type="password" name="password" placeholder="Password" onChange={ this.handleChange } value={ password } />
+                <input type="password" name="passwordConfirmation" placeholder="Confirm Password" onChange={ this.handleChange } value={ passwordConfirmation } />
                 <button type="submit" className="button-primary">Submit</button>
               </form>
             </div>
