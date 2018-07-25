@@ -1,0 +1,11 @@
+{
+    "editor.formatOnSave": true,
+    "javascript.format.enable": false,
+    "prettier.eslintIntegration": true,
+    "react.beautify.onSave": true,
+    "react.beautify.formatter": "esformatter",
+    "prettier.jsxBracketSameLine": false,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    }
+}
