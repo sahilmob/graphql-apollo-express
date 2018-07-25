@@ -1,13 +1,25 @@
+const jwt = require('jsonwebtoken');
+
+const createToken = (user, secret, expiresIn) => {
+    const {username, email} = user;
+    return jwt.sign({
+        username,
+        email
+    }, secret, {
+        expiresIn
+    })
+}
+
 exports.resolvers = {
     Query: {
         getAllRecipes: async(root, args, {Recipe}) => {
             const AllRecipes = await Recipe.find();
             return AllRecipes;
-            // it could be "return await Recipe.find();"
+        // it could be "return await Recipe.find();"
         }
     },
     Mutation: {
-        addRecipe: async (root,{name, description, category, instructions, username}, {Recipe}) => {
+        addRecipe: async (root, {name, description, category, instructions, username} , {Recipe}) => {
             const newRecipe = await new Recipe({
                 name,
                 description,
@@ -16,6 +28,23 @@ exports.resolvers = {
                 username
             }).save();
             return newRecipe;
+        },
+        signupUser: async (root, {username, email, password} , {User}) => {
+            const user = await User.findOne({
+                username
+            });
+            if (user) {
+                throw new Error('User already exists');
+            }
+
+            const newUser = await new User({
+                username,
+                email,
+                password
+            }).save();
+            return {
+                token: createToken(newUser, process.env.SECRET, '1hr')
+            };
         }
     }
 };
