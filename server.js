@@ -31,10 +31,10 @@ mongoose.connect(process.env.MONGO_URI)
 const app = express();
 
 // Create GraphiQL Application
-app.use('./graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 // Connect schemas with GraphQL
-app.use('/graphql', graphqlExpress({
+app.use('/graphql', bodyParser.json(), graphqlExpress({
     schema,
     context: {
         Recipe,

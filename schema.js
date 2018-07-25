@@ -1,4 +1,9 @@
 exports.typeDefs = `
+
+type Query {
+    getAllRecipes: [Recipe]
+}
+
 type Recipe {
     name: String!
     category: String!
