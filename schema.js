@@ -5,6 +5,7 @@ type Query {
 }
 
 type Recipe {
+    _id: ID
     name: String!
     category: String!
     description: String!
@@ -15,6 +16,7 @@ type Recipe {
 }
 
 type User {
+    _id: ID
     username: String! @unique
     password: String!
     email: String!
