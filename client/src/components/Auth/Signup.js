@@ -1,13 +1,27 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import { SIGNUP_USER } from '../../queries'
+import Error from '../Error.js';
+
+const initialState = {
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+};
+
 class Signup extends React.Component {
     state = {
-        username: '',
-        email: '',
-        password: '',
-        passwordConfirmation: ''
+        ...initialState
     };
+
+
+
+    clearState = () => {
+        this.setState({
+            ...initialState
+        });
+    }
 
     handleChange = (e) => {
         const {name, value} = e.target;
@@ -19,8 +33,15 @@ class Signup extends React.Component {
     handleSubmit = (event, signupUser) => {
         event.preventDefault();
         signupUser().then(data => {
-            console.log(data)
+            console.log(data);
+            this.clearState();
         })
+    }
+
+    validateForm = () => {
+        const {username, email, password, passwordConfirmation} = this.state;
+        const isInvalid = !username || !email || !password || !password !== passwordConfirmation;
+        return isInvalid;
     }
 
     render() {
@@ -36,7 +57,8 @@ class Signup extends React.Component {
                             <input type="email" name="email" placeholder="Email Address" onChange={ this.handleChange } value={ email } />
                             <input type="password" name="password" placeholder="Password" onChange={ this.handleChange } value={ password } />
                             <input type="password" name="passwordConfirmation" placeholder="Confirm Password" onChange={ this.handleChange } value={ passwordConfirmation } />
-                            <button type="submit" className="button-primary">Submit</button>
+                            <button type="submit" className="button-primary" disabled={ loading || this.validateForm() }>Submit</button>
+                            { error && <Error error={ error } /> }
                           </form>
                       )
                   } }
