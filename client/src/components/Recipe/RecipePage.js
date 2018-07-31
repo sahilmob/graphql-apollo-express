@@ -6,15 +6,34 @@ const RecipePage = ({match}) => {
     const {_id} = match.params;
     return (
         <Query query={ GET_RECIPE } variables={ { _id } }>
-          { (data, loading, err) => {
+          { ({data, loading, err}) => {
                 if (loading) {
                     return <div>Loading</div>
                 }
                 if (err) {
                     return <div>err</div>
                 }
-                console.log(data)
-                return <h1>Recipe Page</h1>
+                return (
+                    <div className="App">
+                      <h2>{ data.getRecipe.name }</h2>
+                      <p>Category:
+                        { data.getRecipe.category }
+                      </p>
+                      <p>Description:
+                        { data.getRecipe.description }
+                      </p>
+                      <p>Instructions:
+                        { data.getRecipe.instructions }
+                      </p>
+                      <p>Likes:
+                        { data.getRecipe.likes }
+                      </p>
+                      <p>Create By:
+                        { data.getRecipe.username }
+                      </p>
+                      <button>Like</button>
+                    </div>
+                )
             } }
         </Query>
     )
