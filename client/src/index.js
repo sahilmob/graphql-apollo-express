@@ -9,7 +9,8 @@ import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import withSession from './components/withSession';
 import Search from "./components/Recipe/Search";
-
+import AddRecipe from './components/Recipe/AddRecipe';
+import Profile from './components/Profile/Profile';
 import "./index.css";
 
 
@@ -42,6 +43,8 @@ const Root = ({refetch}) => (
         <Route path="/search" exact component={ Search } />
         <Route path="/signin" render={ () => <Signin refetch={ refetch } /> } />
         <Route path="/signup" render={ () => <Signup refetch={ refetch } /> } />
+        <Route path="/recipe/add" component={ AddRecipe } />
+        <Route path="/profile" component={ Profile } />
         <Redirect to="/" />
       </Switch>
     </Fragment>
