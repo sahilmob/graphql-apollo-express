@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
 import { ADD_RECIPE } from '../../queries';
 import Error from '../Error';
+
+const initialState = {
+    name: '',
+    instructions: '',
+    category: 'Breakfast',
+    description: '',
+    username: ''
+};
 class AddRecipe extends Component {
     state = {
-        name: '',
-        instructions: '',
-        category: 'Breakfast',
-        description: '',
-        username: ''
+        ...initialState
     };
 
     componentDidMount() {
@@ -28,11 +33,17 @@ class AddRecipe extends Component {
         event.preventDefault();
         addRecipe().then(({data}) => {
             console.log(data);
+            this.clearState();
+            this.props.history.push('/');
         }).catch(err => {
             console.log(err)
         })
     }
-
+    clearState = () => {
+        this.setState({
+            ...initialState
+        });
+    }
     validateForm = () => {
         const {name, category, description, instructions} = this.state;
         const isInvalid = !name || !category || !description || !instructions;
@@ -68,4 +79,4 @@ class AddRecipe extends Component {
     }
 }
 
-export default AddRecipe;
+export default withRouter(AddRecipe);
