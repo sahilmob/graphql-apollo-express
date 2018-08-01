@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
-import { ADD_RECIPE } from '../../queries';
+import { ADD_RECIPE, GET_ALL_RECIPES } from '../../queries';
 import Error from '../Error';
 
 const initialState = {
@@ -38,22 +38,35 @@ class AddRecipe extends Component {
         }).catch(err => {
             console.log(err)
         })
-    }
+    };
+
     clearState = () => {
         this.setState({
             ...initialState
         });
-    }
+    };
+
     validateForm = () => {
         const {name, category, description, instructions} = this.state;
         const isInvalid = !name || !category || !description || !instructions;
         return isInvalid;
     }
 
+    updateCache = (cache, {data: {addRecipe}}) => {
+        const {getAllRecipes} = cache.readQuery({
+            query: GET_ALL_RECIPES
+        });
+        cache.writeQuery({
+            query: GET_ALL_RECIPES,
+            data: {
+                getAllRecipes: [addRecipe, ...getAllRecipes]
+            }
+        })
+    }
     render() {
         const {name, category, description, instructions, username} = this.state;
         return (
-            <Mutation mutation={ ADD_RECIPE } variables={ { name, category, description, instructions, username } }>
+            <Mutation mutation={ ADD_RECIPE } variables={ { name, category, description, instructions, username } } update={ this.updateCache }>
               { (addRecipe, {data, loading, error}) => {
                     return (
                         <div className="App">
