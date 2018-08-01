@@ -38,6 +38,18 @@ exports.resolvers = {
                 _id
             });
             return recipe;
+        },
+        searchRecipes: async (root, {searchTerm}, {Recipe}) => {
+            if (searchTerm) {
+
+            } else {
+                const recipes = await Recipe.find().sort({
+                    like: "desc",
+                    createdDate: "desc"
+                });
+                return recipes
+            }
+
         }
     },
     Mutation: {
