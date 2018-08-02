@@ -53,6 +53,16 @@ mutation($name: String!, $description: String!, $category: String!, $instruction
 	}
 }
 `;
+
+export const DELETE_USER_RECIPE = gql`
+mutation($_id: ID) {
+	deleteUserRecipe(_id:$_id){
+		_id
+
+	}
+}
+`;
+
 // User Queries
 export const GET_CURRENT_USER = gql`
 query {
