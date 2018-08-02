@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 import withAuth from '../withAuth';
-import { ADD_RECIPE, GET_ALL_RECIPES } from '../../queries';
+import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from '../../queries';
 import Error from '../Error';
 
 const initialState = {
@@ -67,7 +67,9 @@ class AddRecipe extends Component {
     render() {
         const {name, category, description, instructions, username} = this.state;
         return (
-            <Mutation mutation={ ADD_RECIPE } variables={ { name, category, description, instructions, username } } update={ this.updateCache }>
+            <Mutation mutation={ ADD_RECIPE } refetchQueries={()=>[
+                {query: GET_USER_RECIPES, variables: {username}}
+            ]} variables={ { name, category, description, instructions, username } }  update={ this.updateCache }>
               { (addRecipe, {data, loading, error}) => {
                     return (
                         <div className="App">
