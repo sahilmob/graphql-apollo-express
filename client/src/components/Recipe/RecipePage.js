@@ -1,8 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
-import { GET_RECIPE } from '../../queries/index'
+import { GET_RECIPE } from '../../queries/index';
 import LikeRecipe from './LikeRecipe';
+
 const RecipePage = ({match}) => {
   const {_id} = match.params;
   return (
