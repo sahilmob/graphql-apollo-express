@@ -33,11 +33,9 @@ class AddRecipe extends Component {
     handleSubmit = (event, addRecipe) => {
         event.preventDefault();
         addRecipe().then(({data}) => {
-            console.log(data);
             this.clearState();
             this.props.history.push('/');
         }).catch(err => {
-            console.log(err)
         })
     };
 
@@ -67,9 +65,14 @@ class AddRecipe extends Component {
     render() {
         const {name, category, description, instructions, username} = this.state;
         return (
-            <Mutation mutation={ ADD_RECIPE } refetchQueries={()=>[
-                {query: GET_USER_RECIPES, variables: {username}}
-            ]} variables={ { name, category, description, instructions, username } }  update={ this.updateCache }>
+            <Mutation mutation={ ADD_RECIPE } refetchQueries={ () => [
+                                                       {
+                                                           query: GET_USER_RECIPES,
+                                                           variables: {
+                                                               username
+                                                           }
+                                                       }
+                                                   ] } variables={ { name, category, description, instructions, username } } update={ this.updateCache }>
               { (addRecipe, {data, loading, error}) => {
                     return (
                         <div className="App">
