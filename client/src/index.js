@@ -16,7 +16,7 @@ import "./index.css";
 
 
 const client = new ApolloClient({
-  uri: "http://localhost:3300/graphql",
+  uri: "https://react-apollo-r.herokuapp.com/graphql",
   fetchOptions: {
     credentials: 'include'
   },
